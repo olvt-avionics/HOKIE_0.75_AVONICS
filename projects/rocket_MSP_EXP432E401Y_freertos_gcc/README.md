@@ -1,6 +1,6 @@
-## Example Summary
+# Summary
 
-Sample application to handle buttons and LEDs via the Button and LED drivers.
+
 
 ## Peripherals & Pin Assignments
 
@@ -8,12 +8,6 @@ SysConfig generates the driver configurations into the __ti_drivers_config.c__
 and __ti_drivers_config.h__ files. Information on pins and resources used
 is present in both generated files. The SysConfig user interface can also be
 utilized to determine pins and resources used.
-
-* `CONFIG_BUTTON_0` - Button instance used to register button presses
-* `CONFIG_BUTTON_1` - Button instance used to register button presses
-* `CONFIG_LED_0` - LED instance used to control the onboard LED using GPIO.
-* `CONFIG_LED_1` - LED instance used to control the onboard LED using GPIO.
-* `CONFIG_LED_2` - LED instance used to control the onboard LED using PWM.
 
 ## BoosterPacks, Board Resources & Jumper Settings
 
@@ -47,40 +41,12 @@ The connection will have the following settings:
     Flow Control:    None
 ```
 
-* Run the example.
-
-* Boards with a third LED that is dimmable will show a 'pulse' effect.
-
-* Both `CONFIG_BUTTON_0` and `CONFIG_BUTTON_1` will register button presses.
-  Each button controls one of the GPIO controlled LEDs. Different kinds of
-  presses will result in different LED behavior. The example will output to
-  the serial session when buttons are pressed.
-
-| Action                                  | LED Behavior            |
-|:---------------------------------------:|:-----------------------:|
-| Button pressed and released             | Toggle LED              |
-| Button double pressed                   | Fast blink three times  |
-| Button long press                       | Start slow LED blink    |
-| Button long press release               | Stop slow LED blink     |
-
 ## Application Design Details
 
-This application uses one thread, `mainThread` , which performs the following
+This application uses three threads, `main_thread` , which performs the following
 actions:
 
-1. Opens and initializes LED, Button, and Display instances.
 
-2. If board supports a dimmable LED, a PWM LED starts a heartbeat effect in the
-   mainThread.
-
-3. Button presses result in an application callback which filters for certain
-   button events and calls LED APIs appropriately. Subscribed events are also
-   stored in a circular buffer.
-
-4. mainThread maintains the heartbeat by setting the PWM duty via LED_setOn().
-
-5. mainThread consumes Button_Events from the circular buffer and prints
-   messages to the UART.
 
 TI-RTOS:
 
