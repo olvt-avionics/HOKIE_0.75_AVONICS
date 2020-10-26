@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019, Texas Instruments Incorporated
+ * Copyright (c) 2016-2020, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -46,18 +46,12 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-/* Driver configuration */
 #include <ti/drivers/Board.h>
 
-/* User Create Files */
-//#include "rocket_main_thread.c"
-
-extern void *main_thread(void *arg0);
-extern void *spi_thread(void *arg0);
+extern void *fsm_thread(void *arg0);
 
 /* Stack size in bytes */
-#define MAIN_THREAD_STACK_SIZE   1024
-#define PERIPHERAL_STACK_SIZE    1024
+#define THREADSTACKSIZE   1024
 
 /*
  *  ======== main ========
@@ -74,7 +68,6 @@ int main(void)
     __iar_Initlocks();
 #endif
 
-    /* Call driver init functions */
     Board_init();
 
     /* Initialize the attributes structure with default values */
@@ -84,51 +77,22 @@ int main(void)
     priParam.sched_priority = 1;
     retc = pthread_attr_setschedparam(&attrs, &priParam);
     retc |= pthread_attr_setdetachstate(&attrs, PTHREAD_CREATE_DETACHED);
-    retc |= pthread_attr_setstacksize(&attrs, MAIN_THREAD_STACK_SIZE);
+    retc |= pthread_attr_setstacksize(&attrs, THREADSTACKSIZE);
     if (retc != 0) {
         /* failed to set attributes */
         while (1) {}
     }
 
-    retc = pthread_create(&thread, &attrs, main_thread, NULL);
-        if (retc != 0) {
-            /* pthread_create() failed */
-            while (1) {}
-        }
-
-        retc |= pthread_attr_setstacksize(&attrs, PERIPHERAL_STACK_SIZE);
-            if (retc != 0) {
-                /* failed to set attributes */
-                while (1) {}
-            }
-
-        retc = pthread_create(&thread, &attrs, spi_thread, NULL);
-            if (retc != 0) {
-                /* pthread_create() failed */
-                while (1) {}
-            }
+    retc = pthread_create(&thread, &attrs, fsm_thread, NULL);
+    if (retc != 0) {
+        /* pthread_create() failed */
+        while (1) {}
+    }
 
     /* Start the FreeRTOS scheduler */
     vTaskStartScheduler();
 
     return (0);
-}
-
-//*****************************************************************************
-//
-//! \brief Application defined malloc failed hook
-//!
-//! \param  none
-//!
-//! \return none
-//!
-//*****************************************************************************
-void vApplicationMallocFailedHook()
-{
-    /* Handle Memory Allocation Errors */
-    while(1)
-    {
-    }
 }
 
 //*****************************************************************************

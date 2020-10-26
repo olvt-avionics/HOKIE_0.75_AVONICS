@@ -166,7 +166,7 @@
 			<locationURI>COM_TI_SIMPLELINK_MSP432E4_SDK_INSTALL_DIR/kernel/freertos/startup/startup_msp432e4_gcc.c</locationURI>
 		</link>
 		<link>
-			<name>freertos/portable/GCC/ARM_CM3/port.c</name>
+			<name>freertos/portable/GCC/ARM_CM4F/port.c</name>
 			<type>1</type>
 			<locationURI>FREERTOS_INSTALL_DIR/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c</locationURI>
 		</link>

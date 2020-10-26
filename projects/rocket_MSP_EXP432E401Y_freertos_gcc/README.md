@@ -1,13 +1,18 @@
-# Summary
+## Example Summary
 
-
+Example that uses the UART driver to echo back to the console.
 
 ## Peripherals & Pin Assignments
 
-SysConfig generates the driver configurations into the __ti_drivers_config.c__
-and __ti_drivers_config.h__ files. Information on pins and resources used
-is present in both generated files. The SysConfig user interface can also be
-utilized to determine pins and resources used.
+When this project is built, the SysConfig tool will generate the TI-Driver
+configurations into the __ti_drivers_config.c__ and __ti_drivers_config.h__
+files. Information on pins and resources used is present in both generated
+files. Additionally, the System Configuration file (\*.syscfg) present in the
+project may be opened with SysConfig's graphical user interface to determine
+pins and resources used.
+
+* `CONFIG_GPIO_LED_0` - Indicates that the board was initialized within `main()`
+* `CONFIG_UART_0` - Used to echo characters from host serial session
 
 ## BoosterPacks, Board Resources & Jumper Settings
 
@@ -22,31 +27,39 @@ The Board.html can also be found in your SDK installation:
 
         <SDK_INSTALL_DIR>/source/ti/boards/<BOARD>
 
-## Example Usage
 
-* Example output is generated through use of Display driver APIs. Refer to the
-Display driver documentation found in the SimpleLink MCU SDK User's Guide.
+## Example Usage
 
 * Open a serial session (e.g. [`PuTTY`](http://www.putty.org/ "PuTTY's
 Homepage"), etc.) to the appropriate COM port.
     * The COM port can be determined via Device Manager in Windows or via
 `ls /dev/tty*` in Linux.
 
-The connection will have the following settings:
+The connection should have the following settings
 ```
-    Baud-rate:     115200
-    Data bits:          8
-    Stop bits:          1
-    Parity:          None
-    Flow Control:    None
+    Baud-rate:  115200
+    Data bits:       8
+    Stop bits:       1
+    Parity:       None
+    Flow Control: None
 ```
+
+* Run the example. `CONFIG_GPIO_LED_0` turns ON to indicate driver
+initialization is complete.
+
+* The target echoes back any character that is typed in the serial session.
+
+* If the serial session is started before the target completes initialization,
+the following is displayed:
+`Echoing characters:`
 
 ## Application Design Details
 
-This application uses three threads, `main_thread` , which performs the following
-actions:
+* This example shows how to initialize the UART driver in blocking read
+and write mode with no data processing and echo characters back to a console.
 
-
+* A single thread, `echo`, reads a character from `CONFIG_UART_0` and writes it
+back.
 
 TI-RTOS:
 

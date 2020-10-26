@@ -1,0 +1,48 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/ti/boards/MSP_EXP432E401Y" --product "simplelink_msp432e4_sdk@4.20.00.12"
+ * @versions {"data":"2020052512","timestamp":"2020052512","tool":"1.5.0+1397","templates":"2020052512"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const GPIO  = scripting.addModule("/ti/drivers/GPIO");
+const GPIO1 = GPIO.addInstance();
+const RTOS  = scripting.addModule("/ti/drivers/RTOS");
+const SPI   = scripting.addModule("/ti/drivers/SPI", {}, false);
+const SPI1  = SPI.addInstance();
+const UART  = scripting.addModule("/ti/drivers/UART");
+const UART1 = UART.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+GPIO1.$hardware = system.deviceData.board.components.D1;
+GPIO1.$name     = "CONFIG_GPIO_LED_0";
+
+RTOS.name = "FreeRTOS";
+
+SPI1.mode                     = "Four Pin SS Active High";
+SPI1.$name                    = "XBEE_SPI";
+SPI1.spi.$assign              = "SSI0";
+SPI1.spi.sclkPin.$assign      = "expansion.6";
+SPI1.spi.misoPin.$assign      = "boosterpack2.30";
+SPI1.spi.mosiPin.$assign      = "boosterpack2.29";
+SPI1.spi.ssPin.$assign        = "expansion.8";
+SPI1.spi.dmaRxChannel.$assign = "UDMA_CH10";
+SPI1.spi.dmaTxChannel.$assign = "UDMA_CH11";
+
+UART1.$name     = "CONFIG_UART_0";
+UART1.$hardware = system.deviceData.board.components.XDS110UART;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+GPIO1.gpioPin.$suggestSolution    = "expansion.87";
+UART1.uart.$suggestSolution       = "UART0";
+UART1.uart.txPin.$suggestSolution = "expansion.76";
+UART1.uart.rxPin.$suggestSolution = "expansion.74";
