@@ -36,20 +36,19 @@
 #include <stdint.h>
 #include <stddef.h>
 
-/* Driver Header files */
-#include <ti/drivers/GPIO.h>
-#include <ti/drivers/UART.h>
-
 /* Driver configuration */
 #include "ti_drivers_config.h"
-
+#include "fsm/fsm_types.h"
 /*
  *  ======== mainThread ========
  */
 void *fsm_thread(void *arg0)
 {
     /* Loop forever echoing */
+    state
     while (1) {
-
+        switch(){
+        
+        }
     }
 }
