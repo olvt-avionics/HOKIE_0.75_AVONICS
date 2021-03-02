@@ -35,8 +35,8 @@ SPI1.spi.ssPin.$assign        = "expansion.8";
 SPI1.spi.dmaRxChannel.$assign = "UDMA_CH10";
 SPI1.spi.dmaTxChannel.$assign = "UDMA_CH11";
 
-UART1.$name     = "CONFIG_UART_0";
 UART1.$hardware = system.deviceData.board.components.XDS110UART;
+UART1.$name     = "USB_UART_0";
 
 UART2.$name = "XBEE_UART";
 

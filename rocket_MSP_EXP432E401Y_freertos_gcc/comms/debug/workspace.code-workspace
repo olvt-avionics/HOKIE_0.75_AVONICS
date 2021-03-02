@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\.."
+		},
+		{
+			"path": "C:\\ti"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"ti_drivers_config.h": "c",
+			"sr_com.h": "c"
+		}
+	}
+}

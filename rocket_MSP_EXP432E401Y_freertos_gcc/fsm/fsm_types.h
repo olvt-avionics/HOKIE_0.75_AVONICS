@@ -8,6 +8,6 @@
 #ifndef FSM_FSM_TYPES_H_
 #define FSM_FSM_TYPES_H_
 
-typedef enum {DEBUG, INIT, IDLE, PRIMED, DISARMED, ARMED}
+typedef enum { DEBUG, INIT, IDLE, ARMED, DISARMED } fsm_type;
 
 #endif /* FSM_FSM_TYPES_H_ */

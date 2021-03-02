@@ -39,16 +39,35 @@
 /* Driver configuration */
 #include "ti_drivers_config.h"
 #include "fsm/fsm_types.h"
+#include "comms/sr_comms/sr_com.h"
+#include "comms/debug/dbg_usb.h"
+
 /*
- *  ======== mainThread ========
+ *  ======== fsm_thread ========
  */
 void *fsm_thread(void *arg0)
 {
     /* Loop forever echoing */
-    state
+    fsm_type state = INIT;
+    UART_Handle xbee_uart;
+    UART_Handle debug_uart;
     while (1) {
-        switch(){
-        
+        switch(state){
+            case DEBUG:
+                debug_uart = dbg_init(); // Initialize debugger uart device
+            break;
+            case INIT:
+                xbee_uart  = xbee_init(); // Initialize xbee uart device
+            break;
+            case IDLE:
+
+            break;
+            case ARMED:
+
+            break;
+            case DISARMED:
+
+            break;
         }
     }
 }
