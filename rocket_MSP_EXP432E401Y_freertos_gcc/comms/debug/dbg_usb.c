@@ -11,8 +11,6 @@
 
 UART_Params dbg_uart_params_init(){
     UART_Params uart_config;
-    UART_init();
-
     UART_Params_init(&uart_config);
     uart_config.writeDataMode = UART_DATA_BINARY;
     uart_config.readDataMode = UART_DATA_BINARY;
@@ -22,6 +20,7 @@ UART_Params dbg_uart_params_init(){
 }
 
 UART_Handle dbg_init(){
+    UART_init();
     UART_Params uart_config = dbg_uart_params_init();
     UART_Handle uart = UART_open(USB_UART_0, &uart_config); // XBEE_UART comes from sysconfig
     if (uart == NULL) {
@@ -34,5 +33,7 @@ UART_Handle dbg_init(){
 void dbg_start(){
     UART_Handle uart;
     uart = dbg_init();
+    char buffer[20];
     UART_write(uart, "Initialized USB Debugging.", 1);
+    UART_read(uart, buffer, 1);
 }
